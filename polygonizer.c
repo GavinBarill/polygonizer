@@ -1,3 +1,4 @@
+
 /*
  * C code from the article
  * "An Implicit Surface Polygonizer"
@@ -203,6 +204,19 @@ typedef struct process {	   /* parameters, function, storage */
 void *calloc();
 char *mycalloc();
 
+void converge(
+  POINT * p1, POINT * p2, double v, double (*function)(), POINT * p);
+void testface(
+  int i, 
+  int j, 
+  int k, 
+  CUBE * old, 
+  int face, 
+  int c1, 
+  int c2, 
+  int c3, 
+  int c4, 
+  PROCESS * p);
 
 /**** A Test Program ****/
 
@@ -509,7 +523,7 @@ int bounds, (*triproc)(), mode;
  * if surface crosses face, compute other four corners of adjacent cube
  * and add new cube to cube stack */
 
-testface (i, j, k, old, face, c1, c2, c3, c4, p)
+void testface (i, j, k, old, face, c1, c2, c3, c4, p)
 CUBE *old;
 PROCESS *p;
 int i, j, k, face, c1, c2, c3, c4;
@@ -928,7 +942,7 @@ PROCESS *p;
 
 /* converge: from two points of differing sign, converge to zero crossing */
 
-converge (p1, p2, v, function, p)
+void converge (p1, p2, v, function, p)
 double v;
 double (*function)();
 POINT *p1, *p2, *p;
