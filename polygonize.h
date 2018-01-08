@@ -33,7 +33,7 @@ namespace igl
 
 // Implementation
 
-#include "Polygonizer.hpp"
+#include "Polygonizer.h"
 #include <igl/list_to_matrix.h>
 #include <vector>
 template <
