@@ -409,6 +409,18 @@ class polygonizer
  *	     NOTET: polygonize cube directly
  *   returns error or NULL
  */
+  // https://stackoverflow.com/a/6417182/148668
+  template <typename LIST> 
+  static void free_list(LIST * head)
+  {
+    LIST * tmp;
+    while (head != NULL)
+    {
+       tmp = head;
+       head = head->next;
+       free(tmp);
+    }
+  };
   static inline std::string polygonize(
     const std::function< double(double,double,double) > & function,
     const double size,
@@ -532,6 +544,7 @@ class polygonizer
 
         /* pop current cube from stack */
         p.cubes = p.cubes->next;
+        // Of all the things to care about freeing from memory...
         free((char *) temp);
         /* test six face directions, maybe add to stack: */
         testface(c.i-1, c.j, c.k, &c, L, LBN, LBF, LTN, LTF, &p);
@@ -541,6 +554,15 @@ class polygonizer
         testface(c.i, c.j, c.k-1, &c, N, LBN, LTN, RBN, RTN, &p);
         testface(c.i, c.j, c.k+1, &c, F, LBF, LTF, RBF, RTF, &p);
     }
+
+    // Shouldn't we free up all the memory we allocated?
+    free_list(p.cubes);
+    for(int i = 0;i<HASHSIZE;i++) free_list(p.centers[i]);
+    delete[] p.centers;
+    for(int i = 0;i<HASHSIZE;i++) free_list(p.corners[i]);
+    delete[] p.corners;
+    for(int i = 0;i<2*HASHSIZE;i++) free_list(p.edges[i]);
+    delete[] p.edges;
 
     return "";
   }
