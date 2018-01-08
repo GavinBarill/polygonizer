@@ -10,12 +10,12 @@
  *
  * C code from the article
  * "An Implicit Surface Polygonizer"
- * http::www.unchainedgeometry.com/jbloom/papers/polygonizer.pdf
+ * http::www.unchainedgeometry.com/jbloom/papers/Polygonizer.pdf
  * by Jules Bloomenthal, jules@bloomenthal.com
  * in "Graphics Gems IV", Academic Press, 1994 */
 
 /* implicit.c
- *     an implicit surface polygonizer, translated from Mesa
+ *     an implicit surface Polygonizer, translated from Mesa
  *     applications should call polygonize()
  *
  * To compile a test program for ASCII output:
@@ -29,7 +29,7 @@
  * Permission is granted to reproduce, use and distribute this code for
  * any and all purposes, provided that this notice appears in all copies.  */
 
-class polygonizer
+class Polygonizer
 {
   public:
   // TYPES
@@ -570,7 +570,7 @@ class polygonizer
 
 // IMPLEMENTATIONS
 /* mycalloc: return successful calloc or exit program */
-inline char * polygonizer::mycalloc(int nitems, int nbytes)
+inline char * Polygonizer::mycalloc(int nitems, int nbytes)
 {
    char *ptr = (char*)calloc(nitems, nbytes);
    if (ptr != NULL) return ptr;
@@ -578,7 +578,7 @@ inline char * polygonizer::mycalloc(int nitems, int nbytes)
    fprintf(stderr, "can't calloc %d bytes\n", nitems*nbytes);
    exit(1);
 }
-inline void polygonizer::converge(
+inline void Polygonizer::converge(
   POINT * p1, 
   POINT * p2, 
   double v, 
@@ -606,7 +606,7 @@ inline void polygonizer::converge(
   }
 }
 
-inline void polygonizer::testface (
+inline void Polygonizer::testface (
   int i,
   int j,
   int k,
@@ -650,11 +650,11 @@ inline void polygonizer::testface (
 }
 
 // boo. global.
-constexpr int polygonizer::corner1[];
-constexpr int polygonizer::corner2[];
-constexpr int polygonizer::leftface[];
-constexpr int polygonizer::rightface[];
-polygonizer::INTLISTS *polygonizer::cubetable[];
+constexpr int Polygonizer::corner1[];
+constexpr int Polygonizer::corner2[];
+constexpr int Polygonizer::leftface[];
+constexpr int Polygonizer::rightface[];
+Polygonizer::INTLISTS *Polygonizer::cubetable[];
 
 
 #endif

@@ -33,7 +33,7 @@ namespace igl
 
 // Implementation
 
-#include "polygonizer.hpp"
+#include "Polygonizer.hpp"
 #include <igl/list_to_matrix.h>
 #include <vector>
 template <
@@ -54,7 +54,7 @@ bool igl::polygonize(
   std::vector<std::vector<typename DerivedF::Scalar > > vF;
   const auto & add_triangle = 
     [&vV,&vF,&vN]
-    (int i1, int i2, int i3, std::vector<polygonizer::VERTEX> & vertices)
+    (int i1, int i2, int i3, std::vector<Polygonizer::VERTEX> & vertices)
       ->bool
   {
     // Add this triangle
@@ -64,7 +64,7 @@ bool igl::polygonize(
     {
       for(int i = vV.size();i<vertices.size();i++)
       {
-        const polygonizer::VERTEX & v = vertices[i];
+        const Polygonizer::VERTEX & v = vertices[i];
         vV.emplace_back(
           std::vector<typename DerivedV::Scalar >
           { v.position.x, v.position.y, v.position.z});
@@ -76,7 +76,7 @@ bool igl::polygonize(
     assert(vertices.size() == vV.size());
     return true;
   };
-  std::string err = polygonizer::polygonize(
+  std::string err = Polygonizer::polygonize(
     implicit,width,range,seed(0),seed(1),seed(2), 
     add_triangle,0);
   if(!err.empty())
